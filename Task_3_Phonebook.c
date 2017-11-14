@@ -222,6 +222,8 @@ the_contact_t* delete_date(the_contact_t* a, uint64_t* size_array) {
     return a;
 }
 
+//Call function
+
 void* call_number(the_contact_t* a, uint64_t* size_array)
 {
     int64_t input_for_call = -1;
@@ -314,5 +316,6 @@ int main()
         }
     } while (input != Exit);
     write_to_file(a, &size_array);
+    free(a);
     return 0;
 }
