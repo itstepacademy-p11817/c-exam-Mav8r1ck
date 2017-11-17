@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include<stdarg.h>
 
+
 #define MAXSURNAME 11 //max length for surname
 
 //Structure of contacts
@@ -16,32 +17,33 @@ typedef struct
     int phone_number;
 } the_contact_t;
 
-//List of commands
 
+
+//List of commands
 enum commands {
-    Exit,
-    Enter_date,
-    Edit_date,
-    Delete_date,
-    Find_date,
-    Print_date,
-    Call_phone_number
+    Exit = 0,
+    Enter_date = 1,
+    Edit_date = 2,
+    Delete_date = 3,
+    Find_date = 4,
+    Print_date = 5,
+    Call_phone_number = 6
 };
 
 //For calls
 
 enum call {
-    Exit_from_call,
-    Call_by_name,
-    Call_by_number
+    Exit_from_call = 0,
+    Call_by_name = 1,
+    Call_by_number = 2
 };
 
 //Finding menu
 
 enum finding {
-    Exit_from_finding,
-    Find_by_surname,
-    Find_by_phone_number
+    Exit_from_finding = 0,
+    Find_by_surname = 1,
+    Find_by_phone_number = 2
 };
 
 //Read contacts from file function
@@ -98,12 +100,12 @@ the_contact_t* enter_date(the_contact_t* a, uint64_t* size_array) {
         (*size_array)++;
         a = realloc(a, sizeof(the_contact_t)*(*size_array));
     }
-        printf("Enter Surname\n");
-        scanf("%s", a[(*size_array)-1].surname);
-        printf("Enter Name\n");
-        scanf("%s", a[(*size_array)-1].name);
-        printf("Enter phone number\n");
-        scanf("%d", &a[(*size_array)-1].phone_number);
+    printf("Enter Surname\n");
+    scanf("%s", a[(*size_array)-1].surname);
+    printf("Enter Name\n");
+    scanf("%s", a[(*size_array)-1].name);
+    printf("Enter phone number\n");
+    scanf("%d", &a[(*size_array)-1].phone_number);
 //		fwrite(&a[i], 1, sizeof(the_contact_t), f);
     return a;
 }
@@ -214,9 +216,9 @@ the_contact_t* delete_date(the_contact_t* a, uint64_t* size_array) {
     scanf("%li", &position);
 
     for(position; position < (*size_array)-1; position++)
-        {
-            a[position] = a[position+1];
-        }
+    {
+        a[position] = a[position+1];
+    }
     (*size_array)--;
     a = realloc(a, sizeof(the_contact_t)*(*size_array));
     return a;
@@ -274,7 +276,6 @@ void* call_number(the_contact_t* a, uint64_t* size_array)
         }
     }while(input_for_call != Exit_from_call);
 }
-
 int main()
 {
     the_contact_t* a = NULL;
@@ -282,6 +283,11 @@ int main()
     a = read_from_file(&size_array);
     uint64_t input = 0;
     do {
+        if (a == NULL)
+        {
+            printf("Not opened\n");
+            break;
+        }
         printf("Press 0 for Exit\n");
         printf("Press 1 for Enter data\n");
         printf("Press 2 for Edit data\n");
